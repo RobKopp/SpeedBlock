@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BlockMovementController.cs">
+    <Files>
+      <File FileName="Assets/Scripts/InputContoller.cs" Line="26" Column="1" />
+      <File FileName="Assets/Scripts/Swipe.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BlockMovementController.cs" Line="68" Column="4" />
+      <File FileName="Assets/Scripts/BlockerController.cs" Line="10" Column="31" />
+      <File FileName="Assets/Scripts/GUIController.cs" Line="60" Column="46" />
+      <File FileName="Assets/Scripts/GoalController.cs" Line="13" Column="32" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
