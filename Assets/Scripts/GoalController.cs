@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class GoalController : MonoBehaviour {
+public class GoalController : MonoBehaviour, ISerializable {
 
 	public float SpeedLimit;
-
-	public TextMesh SpeedLimitSign;
-
-	void Start() {
-		SpeedLimitSign.text = ((int)SpeedLimit) + " mph";
-	}
 
 	// Use this for initialization
 	void OnTriggerEnter(Collider collider) {
@@ -18,5 +13,15 @@ public class GoalController : MonoBehaviour {
 		} else {
 			collider.SendMessage("Failed");
 		}
+	}
+
+	public Dictionary<string,string> Serialize() {
+		Dictionary<string,string> options = new Dictionary<string, string>();
+		options.Add ("SpeedLimit", SpeedLimit.ToString());
+		return options;
+	}
+
+	public void DeSerialize(Dictionary<string,object> options) {
+		SpeedLimit = float.Parse((string)options["SpeedLimit"]);
 	}
 }
