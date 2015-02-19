@@ -1,33 +1,38 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MiniJSON;
 
+#if UNITY_EDITOR
 [InitializeOnLoad]
+#endif
 public class LevelRoot : MonoBehaviour {
 	
 
 	static List<GameObject> mapping = new List<GameObject>();
 
 	public string FileName;
-	public string LevelName;
 
-	string FILE_PATH = "Assets/Levels/";
+	public static string FILE_PATH = "Assets/Levels/";
 
 
 	static LevelRoot() {
-		DirectoryInfo dir = new DirectoryInfo("Assets/Resources");
-		FileInfo[] info = dir.GetFiles("*.prefab");
-		info.Select(f => f.FullName).ToArray();
-		foreach (FileInfo f in info) 
-		{ 
-			string prefabName = Path.GetFileNameWithoutExtension(f.Name);
-			GameObject obj = Resources.Load<GameObject>(prefabName);
-			mapping.Add(obj);
-		}
+#if UNITY_EDITOR
+		GameObject[] objs = Resources.LoadAll<GameObject>("LevelAssets");
+		mapping.AddRange(objs);
+#endif
+	}
+
+	public void Awake() {
+#if !UNITY_EDITOR
+		GameObject[] objs = Resources.LoadAll<GameObject>("LevelAssets");
+		mapping.AddRange(objs);
+#endif
 	}
 
 	public void Serialize () {
@@ -72,9 +77,15 @@ public class LevelRoot : MonoBehaviour {
 			GameObject prefab = GetGameObjectByName(name);
 			GameObject itemObj;
 			if(prefab != null) {
+#if UNITY_EDITOR
 				itemObj = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+#endif
+#if !UNITY_EDITOR
+				itemObj = Instantiate(prefab) as GameObject;
+#endif
 			} else {
 				itemObj = new GameObject();
+				itemObj.AddComponent<GameObjectDefinition>();
 			}
 			if(itemObj != null) {
 				itemObj.name = (string)itemDef["friendlyName"];
@@ -122,7 +133,19 @@ public class LevelRoot : MonoBehaviour {
 		children.ForEach(child => DestroyImmediate(child));
 	}
 	
-	public void LoadLevel() {
+
+	public void LoadLevel(string levelFileName) {
+
+		string fileToLoad = FileName;
+		//IF we don't include a filename lets use the one defined in the editor
+		if(levelFileName != "") {
+			fileToLoad = levelFileName;
+		}
+
+		StreamReader sr = new StreamReader(FILE_PATH+fileToLoad);
+		string levelDefinition = sr.ReadToEnd();
+		sr.Close();
+
 		GameObject root = GameObject.Find ("LevelRoot");
 
 		if(root== null) {
@@ -135,9 +158,6 @@ public class LevelRoot : MonoBehaviour {
 		
 		root.name = "LevelRoot";
 
-		StreamReader sr = new StreamReader(FILE_PATH+FileName);
-		string levelDefinition = sr.ReadToEnd();
-		sr.Close();
 		List<object> level = (List<object>)MiniJSON.Json.Deserialize(levelDefinition);
 
 		foreach(object item in level) {

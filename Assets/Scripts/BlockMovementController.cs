@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
+using MiniJSON;
 
 public class BlockMovementController : MonoBehaviour {
 
@@ -16,22 +18,25 @@ public class BlockMovementController : MonoBehaviour {
 
 	float speed;
 
-	public float StartingSpeed;
+	float StartingSpeed;
 
 	public float Acceleration;
 
 	bool started;
 
 	void Start() {
-		transform.forward = StartingDirection.normalized;
+		transform.right = StartingDirection.normalized;
 		startingPosition = transform.position;
 	}
 
-
 	public void Reset() {
 		transform.position = startingPosition;
-		transform.forward = StartingDirection.normalized;
+		transform.right = StartingDirection.normalized;
 		speed = 0;
+		SetMeshHidden(false);
+		if(particleSystem.isPlaying) {
+			particleSystem.Stop();
+		}
 		started = false;
 	}
 
@@ -49,14 +54,15 @@ public class BlockMovementController : MonoBehaviour {
 
 	void StartEngines() {
 		started = true;
-		speed = StartingSpeed;
 		SetDirection(StartingDirection.normalized);
 	}
-
+	
 	public void SetDirection(Vector3 direction) {
+		//The input controller checks if its a valid swipe
 		if(started) {
 			movementDirection = direction.normalized;
-			transform.forward = movementDirection;
+			transform.right = movementDirection;
+			speed += Acceleration;
 		}
 	}
 
@@ -64,13 +70,21 @@ public class BlockMovementController : MonoBehaviour {
 	void Update () {
 		if(started) {
 			transform.position += movementDirection * (speed * Time.deltaTime);
-			speed += Acceleration * Time.deltaTime;
+			//We don't use flat acceleration anymore, use turning to accelerate
+//			speed += Acceleration * Time.deltaTime;
 		}
 	}
 
 	void Failed() {
 		Stop ();
+		SetMeshHidden(true);
+		particleSystem.Play();
 		loseCallback();
+	}
+
+	void SetMeshHidden(bool hidden) {
+		GameObject mesh = transform.FindChild("Mesh").gameObject;
+		mesh.SetActive(!hidden);
 	}
 
 	void Win() {

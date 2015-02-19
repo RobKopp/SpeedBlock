@@ -9,6 +9,8 @@ public class Swipe : MonoBehaviour {
 
 	public OnSwipe onMouseSwipe;
 
+	public float SwipeThreshold;
+
 
 	void Update () {
 		if(Input.GetMouseButtonDown(0)) {
@@ -17,7 +19,10 @@ public class Swipe : MonoBehaviour {
 
 		if(Input.GetMouseButtonUp(0)) {
 			Vector3 currentMousePos = Input.mousePosition;
-			onMouseSwipe(swipeStart - currentMousePos);
+			Vector3 swipe = swipeStart - currentMousePos;
+			if(swipe.sqrMagnitude >= SwipeThreshold * SwipeThreshold) {
+				onMouseSwipe(swipe);
+			}
 		}
 	
 	}

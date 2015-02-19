@@ -7,6 +7,8 @@ Project("{472DC377-33C1-847D-2549-A584A0B1DC8F}") = "SpeedBlock", "Assembly-CSha
 EndProject
 Project("{472DC377-33C1-847D-2549-A584A0B1DC8F}") = "SpeedBlock", "Assembly-CSharp-Editor.csproj", "{A20AC57D-B806-4A30-7E20-89D841100B60}"
 EndProject
+Project("{472DC377-33C1-847D-2549-A584A0B1DC8F}") = "SpeedBlock", "Assembly-UnityScript-firstpass.unityproj", "{6B361417-9D73-3BAE-16DA-5B6055383094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,11 +27,15 @@ Global
 		{A20AC57D-B806-4A30-7E20-89D841100B60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A20AC57D-B806-4A30-7E20-89D841100B60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A20AC57D-B806-4A30-7E20-89D841100B60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B361417-9D73-3BAE-16DA-5B6055383094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B361417-9D73-3BAE-16DA-5B6055383094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B361417-9D73-3BAE-16DA-5B6055383094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B361417-9D73-3BAE-16DA-5B6055383094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																								GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																				GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

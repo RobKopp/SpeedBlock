@@ -13,6 +13,10 @@ public class InputContoller : MonoBehaviour {
 		SwipeHandler.onMouseSwipe += OnSwipe;
 	}
 
+	void OnLevelWasLoaded(int levelNum) {
+		block = GameObject.FindGameObjectWithTag("Player").GetComponent<BlockMovementController>();
+	}
+
 	void OnSwipe(Vector3 swipeDirection) {
 
 		Vector3 desiredDirection;
@@ -20,7 +24,7 @@ public class InputContoller : MonoBehaviour {
 		if(Mathf.Abs(swipeDirection.x) > Mathf.Abs(swipeDirection.y)) {
 			desiredDirection = Vector3.left * (swipeDirection.x < 0 ? -1 : 1);
 		} else {
-			desiredDirection = Vector3.forward * (swipeDirection.y < 0 ? 1 : -1);
+			desiredDirection = Vector3.up * (swipeDirection.y < 0 ? 1 : -1);
 		}
 
 		if(desiredDirection != block.MovementDirection && desiredDirection != (-1 * block.MovementDirection)) {

@@ -6,7 +6,8 @@ public class SpeedLimitSignController : MonoBehaviour,ISerializable {
 	public int SpeedLimit;
 
 	void Start() {
-		GetComponent<TextMesh>().text = SpeedLimit.ToString () + " mph";
+		GameObject goal = GameObject.FindGameObjectWithTag("Goal");
+		GetComponent<TextMesh>().text = goal.GetComponent<GoalController>().SpeedLimit + " mph";
 	}
 
 	public Dictionary<string,string> Serialize() {

@@ -7,7 +7,7 @@ public class GoalController : MonoBehaviour, ISerializable {
 	public float SpeedLimit;
 
 	// Use this for initialization
-	void OnTriggerEnter(Collider collider) {
+	void OnTriggerEnter2D(Collider2D collider) {
 		if(collider.gameObject.GetComponent<BlockMovementController>().Speed >= SpeedLimit) {
 			collider.SendMessage("Win");
 		} else {

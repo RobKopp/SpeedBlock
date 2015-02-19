@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,6 +9,7 @@ public class GameObjectDefinition : MonoBehaviour {
 
 	public virtual Dictionary<string,object> GetSerialization() {
 
+#if UNITY_EDITOR
 		Dictionary<string,object> objectProperties = new Dictionary<string,object>();
 
 		string objName = gameObject.name;
@@ -48,5 +51,9 @@ public class GameObjectDefinition : MonoBehaviour {
 		}
 
 		return objectProperties;
+#endif
+#if !UNITY_EDITOR
+		return new Dictionary<string, object>();
+#endif
 	}
 }

@@ -16,7 +16,7 @@ public class LevelRootEditor : Editor {
 		}
 
 		if(GUILayout.Button ("Load Level")) {
-			levelRoot.LoadLevel();
+			levelRoot.LoadLevel("");
 		}
 	}
 
