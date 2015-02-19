@@ -13,6 +13,27 @@ public class InputContoller : MonoBehaviour {
 		SwipeHandler.onMouseSwipe += OnSwipe;
 	}
 
+	void Update() {
+#if UNITY_EDITOR
+		Vector3 desiredDirection = Vector3.zero;
+		if(Input.GetKeyDown(KeyCode.A)) {
+			desiredDirection = Vector3.left;
+		}
+		if(Input.GetKeyDown(KeyCode.W)) {
+			desiredDirection = Vector3.up;
+		}
+		if(Input.GetKeyDown(KeyCode.S)) {
+			desiredDirection = Vector3.down;
+		}
+		if(Input.GetKeyDown(KeyCode.D)) {
+			desiredDirection = Vector3.right;
+		}
+		if(desiredDirection != Vector3.zero && desiredDirection != block.MovementDirection && desiredDirection != (-1 * block.MovementDirection)) {
+			block.SetDirection(desiredDirection);
+		}
+#endif
+	}
+
 	void OnLevelWasLoaded(int levelNum) {
 		block = GameObject.FindGameObjectWithTag("Player").GetComponent<BlockMovementController>();
 	}
