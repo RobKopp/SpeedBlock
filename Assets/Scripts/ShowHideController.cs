@@ -9,11 +9,11 @@ public class ShowHideController : MonoBehaviour {
 
 	// Use this for initialization
 	void Show () {
-		animation.Play(ShowAnimation.name);
+		GetComponent<Animation>().Play(ShowAnimation.name);
 	}
 	
 	// Update is called once per frame
 	void Hide () {
-		animation.Play(HideAnimation.name);
+		GetComponent<Animation>().Play(HideAnimation.name);
 	}
 }

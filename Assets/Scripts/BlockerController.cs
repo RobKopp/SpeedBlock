@@ -6,7 +6,9 @@ public class BlockerController : MonoBehaviour {
 	public GameObject ExplosionEffects;
 	
 
-	void OnCollisionEnter2D(Collision2D collision) {
-		collision.gameObject.SendMessage("Failed");
+	void OnCollisionEnter(Collision collision) {
+		Debug.Log ("Expplode!");
+
+		collision.gameObject.SendMessage("Failed", SendMessageOptions.DontRequireReceiver);
 	}
 }

@@ -14,18 +14,19 @@ public class InputContoller : MonoBehaviour {
 	}
 
 	void Update() {
-#if UNITY_EDITOR
+#if !UNITY_IOS && !UNITY_ANDROID
+
 		Vector3 desiredDirection = Vector3.zero;
-		if(Input.GetKeyDown(KeyCode.A)) {
+		if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
 			desiredDirection = Vector3.left;
 		}
-		if(Input.GetKeyDown(KeyCode.W)) {
+		if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
 			desiredDirection = Vector3.up;
 		}
-		if(Input.GetKeyDown(KeyCode.S)) {
+		if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
 			desiredDirection = Vector3.down;
 		}
-		if(Input.GetKeyDown(KeyCode.D)) {
+		if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.LeftArrow)) {
 			desiredDirection = Vector3.right;
 		}
 		if(desiredDirection != Vector3.zero && desiredDirection != block.MovementDirection && desiredDirection != (-1 * block.MovementDirection)) {
@@ -34,9 +35,9 @@ public class InputContoller : MonoBehaviour {
 #endif
 	}
 
-	void OnLevelWasLoaded(int levelNum) {
-		block = GameObject.FindGameObjectWithTag("Player").GetComponent<BlockMovementController>();
-	}
+//	void OnLevelWasLoaded(int levelNum) {
+//		block = GameObject.FindGameObjectWithTag("Player").GetComponent<BlockMovementController>();
+//	}
 
 	void OnSwipe(Vector3 swipeDirection) {
 

@@ -24,6 +24,6 @@ public class PlayerStartDefinition : MonoBehaviour,ISerializable {
 		BlockMovementController cont = player.GetComponent<BlockMovementController>();
 		cont.Acceleration = Acceleration;
 //		cont.StartingSpeed = StartingSpeed;
-		cont.StartingDirection = transform.rotation.eulerAngles;
+//		cont.StartingDirection = transform.rotation.eulerAngles;
 	}
 }

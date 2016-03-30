@@ -5,6 +5,10 @@ public class SpeedometerController : MonoBehaviour,ISerializable {
 
 	public BlockMovementController blockMovementController;
 
+	void Start() {
+		blockMovementController = GameObject.FindGameObjectWithTag("Orig").GetComponent<BlockMovementController>();
+	}
+
 	public Dictionary<string,string> Serialize() {
 		return new Dictionary<string,string>();
 	}

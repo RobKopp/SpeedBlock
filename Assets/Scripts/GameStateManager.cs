@@ -6,6 +6,7 @@ using System.Collections;
 public class GameStateManager : MonoBehaviour {
 
 	public enum GameState {
+		Transitioning,
 		Started,
 		WinState,
 		LoseState,
@@ -22,7 +23,7 @@ public class GameStateManager : MonoBehaviour {
 
 	public GameState currentState;
 
-	GameObject currBlock;
+	public GameObject currBlock;
 
 	GameObject currTopLevel;
 
@@ -31,14 +32,17 @@ public class GameStateManager : MonoBehaviour {
 	public void Start() {
 		currentLevel = StartingLevel;
 		currentState = GameState.Loading;
+		currBlock.GetComponent<BlockMovementController>().winCallback += OnWin;
+		currBlock.GetComponent<BlockMovementController>().loseCallback += OnLose;
 		loadLevel(currentLevel);
 
 	}
 
 	void OnLevelWasLoaded(int levelNum) {
-		currBlock = GameObject.FindGameObjectWithTag("Player");
-		currBlock.GetComponent<BlockMovementController>().winCallback += OnWin;
-		currBlock.GetComponent<BlockMovementController>().loseCallback += OnLose;
+		GameObject block = GameObject.FindGameObjectWithTag("Spawn");
+		currBlock.SendMessage("SetStart", block.transform);
+		Destroy (block);
+
 		currentState = GameState.Stopped;
 
 		GameObject deleteNode = GameObject.FindGameObjectWithTag("Dead");

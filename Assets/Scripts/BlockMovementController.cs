@@ -9,12 +9,12 @@ public class BlockMovementController : MonoBehaviour {
 
 	public OnLose loseCallback;
 	public OnWin winCallback;
-
-	Vector3 startingPosition;
-
+	
 	Vector3 movementDirection;
 
-	public Vector3 StartingDirection;
+	public Vector3 startingPosition;
+
+	public Quaternion StartingDirection;
 
 	float speed;
 
@@ -24,18 +24,28 @@ public class BlockMovementController : MonoBehaviour {
 
 	bool started;
 
+	Rigidbody rigid;
+
 	void Start() {
-		transform.right = StartingDirection.normalized;
-		startingPosition = transform.position;
+		rigid = GetComponent<Rigidbody>();
+	}
+
+	void SetStart(Transform startingLoc) {
+		startingPosition = startingLoc.position;
+		StartingDirection = startingLoc.rotation;
+
+		Reset ();
 	}
 
 	public void Reset() {
 		transform.position = startingPosition;
-		transform.right = StartingDirection.normalized;
+		transform.rotation = StartingDirection;
+		rigid.velocity = Vector3.zero;
+		rigid.angularVelocity = Vector3.zero;
 		speed = 0;
 		SetMeshHidden(false);
-		if(particleSystem.isPlaying) {
-			particleSystem.Stop();
+		if(GetComponent<ParticleSystem>().isPlaying) {
+			GetComponent<ParticleSystem>().Stop();
 		}
 		started = false;
 	}
@@ -54,7 +64,7 @@ public class BlockMovementController : MonoBehaviour {
 
 	void StartEngines() {
 		started = true;
-		SetDirection(StartingDirection.normalized);
+		SetDirection(transform.right);
 	}
 	
 	public void SetDirection(Vector3 direction) {
@@ -78,7 +88,7 @@ public class BlockMovementController : MonoBehaviour {
 	void Failed() {
 		Stop ();
 		SetMeshHidden(true);
-		particleSystem.Play();
+		GetComponent<ParticleSystem>().Play();
 		loseCallback();
 	}
 
